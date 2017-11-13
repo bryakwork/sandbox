@@ -28,6 +28,8 @@
 
 /*$app->get('/', App\Action\HomePageAction::class, 'home');*/
 
+use rollun\app\Middleware\HelloWorldMiddleware;
+
 if ($container->has('home-service')) {
     $app->route('/', 'home-service', ['GET'], 'home-page');
 }
@@ -54,4 +56,7 @@ if ($container->has('logoutAR')) {
 }
 if ($container->has('user-page')) {
     $app->route('/user', 'user-page', ['GET', 'POST'], 'user-page');
+}
+if ($container->has('HelloPipe')) {
+    $app->route('/helloMiddleware', 'HelloPipe', ['GET'], 'hello-world-middleware');
 }
