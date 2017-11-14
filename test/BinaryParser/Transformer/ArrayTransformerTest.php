@@ -6,7 +6,7 @@
  * Time: 17:09
  */
 
-use rollun\BinaryParser\Converter\ArrayTransformer;
+use rollun\BinaryParser\Converter\ArraySelector;
 
 class ArrayTransformerTest extends PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class ArrayTransformerTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new ArrayTransformer();
+        $this->object = new ArraySelector();
     }
 
     public function testOne()

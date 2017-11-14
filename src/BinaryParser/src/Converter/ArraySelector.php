@@ -8,7 +8,7 @@
 
 namespace rollun\BinaryParser\Converter;
 
-class ArrayTransformer
+class ArraySelector
 {
     /**
      * Disassembles datastore row and returns its members which have keys from 'keys' param
