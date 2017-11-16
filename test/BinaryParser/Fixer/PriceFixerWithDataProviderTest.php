@@ -9,18 +9,18 @@
 namespace rollun\test\BinaryParser\Fixer;
 
 use PHPUnit\Framework\TestCase;
-use rollun\BinaryParser\Converter\PriceConverter;
+use rollun\BinaryParser\Converter\PriceFixer;
 use rollun\BinaryParser\Converter\WrongTypeException;
 
-class PriceConverterWithDataProviderTest extends TestCase
+class PriceFixerWithDataProviderTest extends TestCase
 {
-    /** @var PriceConverter */
+    /** @var PriceFixer */
     protected $object;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new PriceConverter();
+        $this->object = new PriceFixer();
     }
 
     public function providerStringSet()

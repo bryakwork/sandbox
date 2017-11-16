@@ -8,7 +8,9 @@
 
 namespace rollun\BinaryParser\Converter;
 
-class PriceConverter
+use Zend\Filter\FilterInterface;
+
+class PriceFixer implements FilterInterface
 {
     /**
      * Fixes badly formatted numeric values
@@ -20,7 +22,7 @@ class PriceConverter
      * @return float
      * @throws WrongTypeException
      */
-    public function __invoke($string)
+    function filter($string)
     {
         $check = preg_match("/[a-zA-Z]/", $string);
         if ($check == 0) {
@@ -33,5 +35,11 @@ class PriceConverter
             return $result;
         }
         throw new WrongTypeException;
+    }
+
+    function __invoke($string)
+    {
+        $result = $this->filter($string);
+        return $result;
     }
 }

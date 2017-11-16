@@ -9,17 +9,17 @@
 namespace rollun\test\BinaryParser\Fixer;
 
 use PHPUnit\Framework\TestCase;
-use rollun\BinaryParser\Converter\PriceConverter;
+use rollun\BinaryParser\Converter\PriceFixer;
 
-class PriceConverterTest extends TestCase
+class PriceFixerTest extends TestCase
 {
-    /** @var PriceConverter  **/
+    /** @var PriceFixer  **/
     protected $object;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->object = new PriceConverter();
+        $this->object = new PriceFixer();
     }
 
     public function testDate()
