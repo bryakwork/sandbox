@@ -58,28 +58,26 @@ class Converter
     private function getData()
     {
         $data = $this->origin->query($this->query);
-        var_dump($data);
         return $data;
     }
 
     /**
-     * @param $value
+     * @param $data
      * @return mixed
      * @throws FieldNotFoundException
      * Filters value with filter that implements FilterInterface
      */
-    private function applyFilter($value)
+    private function applyFilter($data)
     {
-        foreach ($value as $key2 => $value2) {
-            var_dump($value);
-            if (!array_key_exists($key2, $this->filters)) {
-                throw new FieldNotFoundException();
+        foreach ($data as $keyData => $valueData) {
+            if (array_key_exists($keyData, $this->filters)) {
+                //covers cases with missing filterParams
+                $filterParams = (isset($this->filters[$keyData]["filterParams"]) ? $this->filters[$keyData]["filterParams"] : []);
+                $data[$keyData] = StaticFilter::execute($valueData, $this->filters[$keyData]["filterName"], $filterParams);
             }
-            //covers cases with missing filterParams
-            $filterParams = (isset($this->filters[$key2]["filterParams"]) ? $this->filters[$key2]["filterParams"] : []);
-            $value[$key2] = StaticFilter::execute($value2, $this->filters[$key2]["filterName"], $filterParams);
+            continue;
         }
-        return $value;
+        return $data;
     }
 
     /**
@@ -98,8 +96,8 @@ class Converter
     function __invoke()
     {
         $result = [];
-        foreach ($this->getData() as $key1 => $value1) {
-            $result[] = $this->applyFilter($value1);
+        foreach ($this->getData() as $key => $value) {
+            $result[] = $this->applyFilter($value);
         }
         $this->write($result);
     }
