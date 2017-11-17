@@ -24,8 +24,8 @@ class Converter
     private $query;
     /** @var  array
      *  'filters' => [
-     *  "name" => ["filterName" => Filter::class, /"filterParams" => [],/],
-     *  "price" => ["filterName" => AnotherFilter::class,],
+     *  "nameField" => ["filterName" => NameFilter::class, /"filterParams" => [],/],
+     *  "priceField" => ["filterName" => PriceFilter::class,],
      * ]
      */
     private $filters;

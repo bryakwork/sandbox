@@ -56,7 +56,6 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
      */
     function canCreate(ContainerInterface $container, $requestedName)
     {
-
         $config = $container->get('config');
         if (isset($config[static::KEY][$requestedName])) {
             return true;
