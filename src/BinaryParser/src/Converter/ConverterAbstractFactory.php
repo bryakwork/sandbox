@@ -30,21 +30,35 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
      * @param array|null $options
      * @return Converter
      * @throws WrongTypeException
+     *
+     * Config example:
+     * ConverterAbstractFactory::class => [
+     *  "CoolConverter" => [
+     *      ConverterAbstractFactory::KEY_ORIGIN_DS => "datastore1",
+     *      ConverterAbstractFactory::KEY_DESTINATION_DS => "datastore2",
+     *      ConverterAbstractFactory::KEY_QUERY => new RqlQuery(),
+     *      ConverterAbstractFactory::KEY_FILTERS => [
+     *          "MSRP" => ["filterName" => PriceFixer::class,],
+     *          "WEIGHT" => ["filterName" => PriceFixer::class,],
+     *          ]
+     *      ]
+     *  ],
      */
+
     function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
         $params = $config[static::KEY][$requestedName];
-        $query = (isset($params[static::KEY_QUERY]) ?  $params[static::KEY_QUERY] : new Query());
-        $filters = (isset($params[static::KEY_FILTERS]) ?  $params[static::KEY_FILTERS] : []);
+        $query = (isset($params[static::KEY_QUERY]) ? $params[static::KEY_QUERY] : new Query());
+        $filters = (isset($params[static::KEY_FILTERS]) ? $params[static::KEY_FILTERS] : []);
         $origin = $container->get($params[static::KEY_ORIGIN_DS]);
-        $destination = $container->get($params[static::KEY_DESTINATION_DS]);
+        $destination = (isset($params[static::KEY_FILTERS]) ? $container->get($params[static::KEY_DESTINATION_DS]) : $container->get($params[static::KEY_ORIGIN_DS]));
         if (is_a($origin, DataStoresInterface::class, true) &&
             is_a($destination, DataStoresInterface::class, true) &&
             is_a($query, Query::class, true) &&
             is_array($filters)
         ) {
-            return new Converter($origin, $destination,$query, $filters);
+            return new Converter($origin, $destination, $query, $filters);
         }
         throw new WrongTypeException();
     }
