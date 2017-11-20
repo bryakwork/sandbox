@@ -44,7 +44,7 @@ class Converter
         $this->destination = $destination;
         $this->query = $query;
         foreach ($filters as $key => $value) {
-            if (!is_a($value["filterName"], FilterInterface::class, true)) {
+            if (!is_a($value["filterClassName"], FilterInterface::class, true)) {
                 throw new WrongTypeException();
             }
         }
@@ -53,7 +53,12 @@ class Converter
 
     /**
      * @return array[]
-     * Execute query and get data
+     * Execute query and return datastore contents as an array
+     *
+     * $data = [
+     *   0 => ["field1Name" => "value1", "field2Name" => "value2"],
+     *   1 => ["field1Name" => "value3", "field2Name" => "value4"]
+     * ];
      */
     private function getData()
     {
@@ -62,22 +67,21 @@ class Converter
     }
 
     /**
-     * @param $data
+     * @param $row
      * @return mixed
-     * @throws FieldNotFoundException
      * Filters value with filter that implements FilterInterface
      */
-    private function applyFilter($data)
+    private function applyFilter($row)
     {
-        foreach ($data as $keyData => $valueData) {
-            if (array_key_exists($keyData, $this->filters)) {
+        foreach ($row as $fieldName => $fieldValue) {
+            if (array_key_exists($fieldName, $this->filters)) {
                 //covers cases with missing filterParams
-                $filterParams = (isset($this->filters[$keyData]["filterParams"]) ? $this->filters[$keyData]["filterParams"] : []);
-                $data[$keyData] = StaticFilter::execute($valueData, $this->filters[$keyData]["filterName"], $filterParams);
+                $filterParams = (isset($this->filters[$fieldName]["filterParams"]) ? $this->filters[$fieldName]["filterParams"] : []);
+                $row[$fieldName] = StaticFilter::execute($fieldValue, $this->filters[$fieldName]["filterClassName"], $filterParams);
             }
             continue;
         }
-        return $data;
+        return $row;
     }
 
     /**
@@ -86,8 +90,9 @@ class Converter
      */
     private function write($result)
     {
-        foreach ($result as $item)
+        foreach ($result as $item) {
             $this->destination->create($item, true);
+        }
     }
 
     /**
@@ -96,8 +101,9 @@ class Converter
     function __invoke()
     {
         $result = [];
-        foreach ($this->getData() as $key => $value) {
-            $result[] = $this->applyFilter($value);
+        $data = $this->getData();
+        foreach ($data as $rowNumber => $row) {
+            $result[] = $this->applyFilter($row);
         }
         $this->write($result);
     }

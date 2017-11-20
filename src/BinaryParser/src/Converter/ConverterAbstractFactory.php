@@ -11,7 +11,7 @@ namespace rollun\BinaryParser\Converter;
 
 use Interop\Container\ContainerInterface;
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
-use Xiag\Rql\Parser\Query;
+use rollun\datastore\Rql\RqlQuery;
 use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 
 
@@ -22,6 +22,8 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
     const KEY_DESTINATION_DS = "destinationDataStore";
     const KEY_QUERY = "query";
     const KEY_FILTERS = "filters";
+    const KEY_FILTER_CLASS_NAME = "filterClassName";
+    const KEY_FILTER_PARAMS = "filterParams";
 
 
     /**
@@ -36,10 +38,10 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
      *  "CoolConverter" => [
      *      ConverterAbstractFactory::KEY_ORIGIN_DS => "datastore1",
      *      ConverterAbstractFactory::KEY_DESTINATION_DS => "datastore2",
-     *      ConverterAbstractFactory::KEY_QUERY => new RqlQuery(),
+     *      ConverterAbstractFactory::KEY_QUERY => "and(lt(age,5),eq(name,testName0))&limit(10)",
      *      ConverterAbstractFactory::KEY_FILTERS => [
-     *          "MSRP" => ["filterName" => PriceFixer::class,],
-     *          "WEIGHT" => ["filterName" => PriceFixer::class,],
+     *          "MSRP" => ["ConverterAbstractFactory::KEY_FILTER" => PriceFixer::class, ConverterAbstractFactory::KEY_FILTER_PARAMS = ["paramName" => "paramValue"]],
+     *          "WEIGHT" => ["ConverterAbstractFactory::KEY_FILTER" => WeightFilter::class,],
      *          ]
      *      ]
      *  ],
@@ -49,13 +51,13 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
     {
         $config = $container->get('config');
         $params = $config[static::KEY][$requestedName];
-        $query = (isset($params[static::KEY_QUERY]) ? $params[static::KEY_QUERY] : new Query());
+        $query = (isset($params[static::KEY_QUERY]) ? new RqlQuery($params[static::KEY_QUERY]) : new RqlQuery());
         $filters = (isset($params[static::KEY_FILTERS]) ? $params[static::KEY_FILTERS] : []);
         $origin = $container->get($params[static::KEY_ORIGIN_DS]);
         $destination = (isset($params[static::KEY_FILTERS]) ? $container->get($params[static::KEY_DESTINATION_DS]) : $container->get($params[static::KEY_ORIGIN_DS]));
         if (is_a($origin, DataStoresInterface::class, true) &&
             is_a($destination, DataStoresInterface::class, true) &&
-            is_a($query, Query::class, true) &&
+            is_a($query, RqlQuery::class, true) &&
             is_array($filters)
         ) {
             return new Converter($origin, $destination, $query, $filters);
