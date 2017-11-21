@@ -7,7 +7,7 @@
  */
 
 date_default_timezone_set("Europe/Kiev");
-echo "Begun at: ", date('l jS F h:i:s A'), PHP_EOL;
+echo "Begun at ", date('l jS F h:i:s A'), PHP_EOL;
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 require_once 'config/env_configurator.php';

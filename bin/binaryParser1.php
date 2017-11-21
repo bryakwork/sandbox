@@ -6,8 +6,7 @@
  * Time: 12:18
  */
 
-
-use rollun\binaryParser\PriceParser;
+use rollun\BinaryParser\TuckerRockyParser;
 use rollun\installer\Command;
 
 chdir(dirname(__DIR__));
@@ -19,6 +18,7 @@ $container = require 'config/container.php';
 \rollun\dic\InsideConstruct::setContainer($container);
 $filename = Command::getDataDir() . "binary_storage/itemmstrnew";
 $datastore = $container->get("tuckerRocky2");
-$parser = new PriceParser($filename, $datastore);
-$parsed = $parser();
-echo $parsed;
+$parser = new TuckerRockyParser($filename, $datastore);
+$parser();
+sleep(60);
+
