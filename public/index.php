@@ -1,5 +1,10 @@
 <?php
 // Delegate static file requests back to the PHP built-in webserver
+use Zend\Db\TableGateway\TableGateway;
+use Zend\Session\SaveHandler\DbTableGateway;
+use Zend\Session\SaveHandler\DbTableGatewayOptions;
+use Zend\Session\SessionManager;
+
 if (php_sapi_name() === 'cli-server'
     && is_file(__DIR__ . parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH))
 ) {

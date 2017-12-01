@@ -28,7 +28,6 @@
 
 /*$app->get('/', App\Action\HomePageAction::class, 'home');*/
 
-use rollun\app\Middleware\HelloWorldMiddleware;
 
 if ($container->has('home-service')) {
     $app->route('/', 'home-service', ['GET'], 'home-page');

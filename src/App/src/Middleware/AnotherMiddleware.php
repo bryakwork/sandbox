@@ -13,9 +13,24 @@ use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
 
 class AnotherMiddleware implements MiddlewareInterface
 {
+
+    /** @var  Container */
+    protected $sessionContainer;
+
+    /**
+     * AnotherMiddleware constructor.
+     * @param Container $sessionContainer
+     */
+    function __construct(Container $sessionContainer)
+    {
+        $this->sessionContainer = $sessionContainer;
+    }
+
     /**
      * Process an incoming server request and return a response, optionally delegating
      * to the next middleware component to create the response.
@@ -27,6 +42,7 @@ class AnotherMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
+        $this->sessionContainer->username = 'John Ceena!';
         $params = $request->getQueryParams();
         $params["s"] = "aaaaa!";
         $request->withAttribute("queryParams", $params);

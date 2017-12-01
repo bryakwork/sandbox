@@ -13,6 +13,8 @@ use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
 
 class HelloWorldMiddleware implements MiddlewareInterface
 {
@@ -30,9 +32,11 @@ class HelloWorldMiddleware implements MiddlewareInterface
     {
         $params = $request->getQueryParams();
         $response = "You sent: ";
-        foreach ($params as $i => $j) {
-            $response .= "parameter " . $i . " = " . $j . ";\n";
+        foreach ($params as $key => $value) {
+            $response .= "parameter " . $key . " = " . $value . ";\n";
         }
+        $user_session = new Container('user');
+        $response .= $user_session->username;
         return new HtmlResponse($response);
     }
 }
