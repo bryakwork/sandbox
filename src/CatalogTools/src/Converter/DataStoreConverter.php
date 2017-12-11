@@ -6,7 +6,7 @@
  * Time: 12:18
  */
 
-namespace rollun\BinaryParser\Converter;
+namespace rollun\CatalogTools\Converter;
 
 
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
@@ -14,7 +14,7 @@ use Xiag\Rql\Parser\Query;
 use Zend\Filter\FilterInterface;
 use Zend\Filter\StaticFilter;
 
-class Converter
+class DataStoreConverter
 {
     /** @var  DataStoresInterface */
     private $origin;
@@ -31,7 +31,7 @@ class Converter
     private $filters;
 
     /**
-     * AbstractConverter constructor.
+     * DataStoreConverter constructor.
      * @param DataStoresInterface $origin
      * @param DataStoresInterface $destination
      * @param Query $query

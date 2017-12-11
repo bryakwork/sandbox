@@ -6,7 +6,7 @@
  * Time: 17:42
  */
 
-namespace rollun\BinaryParser;
+namespace rollun\CatalogTools;
 
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
 use SplFileObject;

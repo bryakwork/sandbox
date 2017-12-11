@@ -6,7 +6,7 @@
  * Time: 15:12
  */
 
-use rollun\BinaryParser\TuckerRockyParser;
+use rollun\CatalogTools\TuckerRockyParser;
 use PHPUnit\Framework\TestCase;
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
 
@@ -244,7 +244,7 @@ class TuckerRockyParserTest extends TestCase
     }
 
     /**
-     * @expectedException rollun\BinaryParser\InvalidArgumentException
+     * @expectedException rollun\CatalogTools\InvalidArgumentException
      */
     function testInvalidArgumentException()
     {

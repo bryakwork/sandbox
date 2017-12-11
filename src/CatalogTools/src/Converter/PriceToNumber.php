@@ -6,11 +6,11 @@
  * Time: 11:55
  */
 
-namespace rollun\BinaryParser\Converter;
+namespace rollun\CatalogTools\Converter;
 
 use Zend\Filter\FilterInterface;
 
-class PriceFixer implements FilterInterface
+class PriceToNumber implements FilterInterface
 {
     /**
      * Fixes badly formatted numeric values

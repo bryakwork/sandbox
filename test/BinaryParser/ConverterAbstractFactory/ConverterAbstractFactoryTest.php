@@ -10,10 +10,10 @@ namespace rollun\binaryParser;
 
 use Interop\Container\ContainerInterface;
 use PHPUnit\Framework\TestCase;
-use rollun\BinaryParser\Converter\Converter;
-use rollun\BinaryParser\Converter\ConverterAbstractFactory;
+use rollun\CatalogTools\Converter\DataStoreConverter;
+use rollun\CatalogTools\Converter\ConverterAbstractFactory;
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
-use Xiag\Rql\Parser\Query;
+use rollun\datastore\Rql\RqlQuery;
 use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
@@ -31,11 +31,18 @@ class ConverterAbstractFactoryTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
+        chdir(dirname(__DIR__, 3));
+        require 'vendor/autoload.php';
+        require_once 'config/env_configurator.php';
+
+        /** @var \Interop\Container\ContainerInterface $container */
+        $container = require 'config/container.php';
+        \rollun\dic\InsideConstruct::setContainer($container);
         $this->object = new ConverterAbstractFactory();
         $this->requestedName = "CoolConverter";
         $this->originDataStore = $this->createMock(DataStoresInterface::class);
         $this->destinationDataStore = $this->createMock(DataStoresInterface::class);
-        $this->query = $this->createMock(Query::class);
+        $this->query = new RqlQuery();
         $this->config = [
             ConverterAbstractFactory::class => [
                 "CoolConverter" => [
@@ -43,8 +50,8 @@ class ConverterAbstractFactoryTest extends TestCase
                     ConverterAbstractFactory::KEY_DESTINATION_DS => "datastore2",
                     ConverterAbstractFactory::KEY_QUERY => $this->query,
                     ConverterAbstractFactory::KEY_FILTERS => [
-                        "name" => ["filterName" => CamelCaseToDash::class, "filterParams" => [],],
-                        "price" => ["filterName" => CamelCaseToUnderscore::class,],
+                        "name" => ["filterClassName" => CamelCaseToDash::class, "filterParams" => [],],
+                        "price" => ["filterClassName" => CamelCaseToUnderscore::class,],
                     ]
                 ]
             ]
@@ -60,7 +67,7 @@ class ConverterAbstractFactoryTest extends TestCase
 
     function testFactoryCanCreate()
     {
-        $rightObject = new Converter($this->originDataStore, $this->destinationDataStore, $this->query, $this->config[ConverterAbstractFactory::class]["CoolConverter"][ConverterAbstractFactory::KEY_FILTERS]);
+        $rightObject = new DataStoreConverter($this->originDataStore, $this->destinationDataStore, $this->query, $this->config[ConverterAbstractFactory::class]["CoolConverter"][ConverterAbstractFactory::KEY_FILTERS]);
 
         $this->assertEquals(true, $this->object->canCreate($this->container, $this->requestedName));
         $this->assertEquals($rightObject, $this->object->__invoke($this->container, $this->requestedName));
@@ -78,7 +85,7 @@ class ConverterAbstractFactoryTest extends TestCase
     }
 
     /**
-     * @expectedException \rollun\BinaryParser\Converter\WrongTypeException
+     * @expectedException \rollun\CatalogTools\Converter\WrongTypeException
      */
     function testWrongTypeException()
     {

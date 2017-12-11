@@ -1,5 +1,5 @@
 <?php
-namespace rollun\BinaryParser;
+namespace rollun\CatalogTools;
 
 use rollun\datastore\DataStore\DbTable;
 

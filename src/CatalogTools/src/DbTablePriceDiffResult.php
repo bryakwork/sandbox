@@ -5,7 +5,7 @@
  * Date: 08.11.2017
  * Time: 11:07
  */
-namespace rollun\BinaryParser;
+namespace rollun\CatalogTools;
 
 use rollun\datastore\DataStore\DbTable;
 

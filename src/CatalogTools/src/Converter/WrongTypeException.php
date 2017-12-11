@@ -6,12 +6,11 @@
  * Time: 12:02
  */
 
-namespace rollun\BinaryParser\Converter;
-
+namespace rollun\CatalogTools\Converter;
 
 use rollun\logger\Exception\LoggedException;
 
-class WrongTypeException extends \Exception
+class WrongTypeException extends LoggedException
 {
 
 }

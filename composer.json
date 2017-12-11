@@ -58,8 +58,8 @@
     "psr-4": {
       "rollun\\App\\": "src/App/src",
       "rollun\\App\\Factories\\": "src/App/src/Factories",
-      "rollun\\BinaryParser\\": "src/BinaryParser/src",
-      "rollun\\BinaryParser\\Converter\\": "src/BinaryParser/src/Converter"
+      "rollun\\CatalogTools\\": "src/CatalogTools/src",
+      "rollun\\CatalogTools\\Converter\\": "src/CatalogTools/src/Converter"
     }
   },
   "autoload-dev": {

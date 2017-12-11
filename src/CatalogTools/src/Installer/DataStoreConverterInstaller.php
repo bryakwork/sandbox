@@ -6,12 +6,12 @@
  * Time: 16:07
  */
 
-namespace rollun\BinaryParser\Installer;
+namespace rollun\CatalogTools\Installer;
 
-use rollun\BinaryParser\Converter\ConverterAbstractFactory;
+use rollun\CatalogTools\Converter\ConverterAbstractFactory;
 use rollun\installer\Install\InstallerAbstract;
 
-class ConverterInstaller extends InstallerAbstract
+class DataStoreConverterInstaller extends InstallerAbstract
 {
     public function install()
     {

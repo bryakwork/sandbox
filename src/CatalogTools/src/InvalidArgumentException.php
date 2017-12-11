@@ -1,6 +1,6 @@
 <?php
 
-namespace rollun\BinaryParser;
+namespace rollun\CatalogTools;
 
 class InvalidArgumentException extends \Exception
 {

@@ -6,7 +6,7 @@
  * Time: 19:28
  */
 
-namespace rollun\BinaryParser\Converter;
+namespace rollun\CatalogTools\Converter;
 
 
 use Interop\Container\ContainerInterface;
@@ -30,7 +30,7 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
      * @param ContainerInterface $container
      * @param string $requestedName
      * @param array|null $options
-     * @return Converter
+     * @return DataStoreConverter
      * @throws WrongTypeException
      *
      * Config example:
@@ -60,7 +60,7 @@ class ConverterAbstractFactory implements AbstractFactoryInterface
             is_a($query, RqlQuery::class, true) &&
             is_array($filters)
         ) {
-            return new Converter($origin, $destination, $query, $filters);
+            return new DataStoreConverter($origin, $destination, $query, $filters);
         }
         throw new WrongTypeException();
     }

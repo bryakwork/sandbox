@@ -6,7 +6,7 @@
  * Time: 12:18
  */
 
-use rollun\BinaryParser\TuckerRockyParser;
+use rollun\CatalogTools\TuckerRockyParser;
 use rollun\installer\Command;
 
 chdir(dirname(__DIR__));
