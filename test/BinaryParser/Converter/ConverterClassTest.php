@@ -8,8 +8,10 @@
 
 use PHPUnit\Framework\TestCase;
 use rollun\BinaryParser\Converter\Converter;
+use rollun\BinaryParser\Converter\PriceFixer;
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
 use Xiag\Rql\Parser\Query;
+use Zend\Filter\Word\CamelCaseToDash;
 
 class ConverterClassTest extends TestCase
 {
@@ -26,7 +28,7 @@ class ConverterClassTest extends TestCase
         $this->data1 = [0 => ["name" => "BwaBwaaa", "price" => "WahWahWah"], 1 => ["name" => "WahWahWah", "price" => "BwaBwaaa",]];
         $this->datastore1->method('query')->willReturn($this->data1);
         $this->datastore2 = $this->createMock(DataStoresInterface::class);
-        $this->datastore2->method('create')->willReturn([0 => ["name" => "Bwa_Bwaaa", "price" => "Wah-Wah-Wah"], 1 => ["name" => "Wah-Wah-Wah", "price" => "Bwa_Bwaaa"],]);
+        $this->datastore2->method('create')->willReturn([0 => ["name" => "Bwa_Bwaaa", "price" => "23.05.2017"], 1 => ["name" => "Wah-Wah-Wah", "price" => 23.05],]);
         $this->query = $this->createMock(Query::class);
 
     }
@@ -34,8 +36,8 @@ class ConverterClassTest extends TestCase
     function testFiltering()
     {
         $filter = [
-            "name" => ["filterName" => "Zend\Filter\Word\CamelCaseToDash", "filterParams" => []],
-            "price" => ["filterName" => "Zend\Filter\Word\CamelCaseToUnderscore", ],
+            "name" => ["filterClassName" => CamelCaseToDash::class, "filterParams" => []],
+            "price" => ["filterClassName" => PriceFixer::class, ],
         ];
 
         $object = new Converter($this->datastore1, $this->datastore2, $this->query, $filter);
@@ -48,8 +50,8 @@ class ConverterClassTest extends TestCase
     function testWrongTypeException()
     {
         $filter = [
-            "name" => ["filterName" => "Zend\Filter\Word\NotCamelCaseToDash", "filterParams" => []],
-            "price" => ["filterName" => "Zend\Filter\Word\CamelCaseToUnderscore", ],
+            "name" => ["filterClassName" => "Zend\Filter\Word\NotCamelCaseToDash", "filterParams" => []],
+            "price" => ["filterClassName" => "Zend\Filter\Word\CamelCaseToUnderscore", ],
         ];
         $object = new Converter($this->datastore1, $this->datastore2, $this->query, $filter);
         $this->assertEquals(null, $object());
@@ -61,8 +63,8 @@ class ConverterClassTest extends TestCase
     function testFieldNotFoundException()
     {
         $filter = [
-            "name" => ["filterName" => "Zend\Filter\Word\CamelCaseToDash", "filterParams" => []],
-            "price" => ["filterName" => "Zend\Filter\Word\CamelCaseToUnderscore",],
+            "name" => ["filterClassName" => "Zend\Filter\Word\CamelCaseToDash", "filterParams" => []],
+            "price" => ["filterClassName" => "Zend\Filter\Word\CamelCaseToUnderscore",],
         ];
         $data2 = [
             0 => ["name" => "BwaBwaaa", "price" => "WahWahWah"],

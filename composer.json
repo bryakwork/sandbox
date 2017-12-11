@@ -44,7 +44,6 @@
     "rollun-com/rollun-callback": "^4.0",
     "rollun-com/rollun-api": "^3.0",
     "zendframework/zend-http": "^2.5",
-    "rollun-com/rollun-permission": "^2.0",
     "zendframework/zend-i18n": "^2.7",
     "http-interop/http-middleware": "^0.4.0"
   },
