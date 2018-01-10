@@ -340,6 +340,8 @@ class TuckerRockyParser
 
     /**
      * Reads entire file, parses all its rows, and saves result to a dataStore
+     * @throws InvalidArgumentException
+     * @throws UnknownFieldTypeException
      */
     function __invoke()
     {
