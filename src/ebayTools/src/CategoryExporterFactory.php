@@ -64,11 +64,12 @@ class CategoryExporterFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $container->get('config');
-        if (!(isset($config[CategoryExporterFactory::KEY])&&
-              isset($config[CategoryExporterFactory::KEY][CategoryExporterFactory::KEY_OAUTH])&&
-              isset($config[CategoryExporterFactory::KEY][CategoryExporterFactory::KEY_CATEGORY])&&
-              isset($config[CategoryExporterFactory::KEY][CategoryExporterFactory::KEY_TAXONOMY])&&
-              isset($config[CategoryExporterFactory::KEY][CategoryExporterFactory::KEY_RESULT_DS]))
+        $config = $config[CategoryExporterFactory::KEY];
+        if (!(isset($config)&&
+              isset($config[CategoryExporterFactory::KEY_OAUTH])&&
+              isset($config[CategoryExporterFactory::KEY_CATEGORY])&&
+              isset($config[CategoryExporterFactory::KEY_TAXONOMY])&&
+              isset($config[CategoryExporterFactory::KEY_RESULT_DS]))
         )
         {
             throw new ServiceNotCreatedException("Invalid CategoryExporter config");
