@@ -29,7 +29,7 @@
 /*$app->get('/', App\Action\HomePageAction::class, 'home');*/
 
 
-if ($container->has('home-service')) {
+if ($container->has('home')) {
     $app->route('/', 'home-service', ['GET'], 'home-page');
 }
 if ($container->has('crud-service')) {
@@ -58,4 +58,10 @@ if ($container->has('user-page')) {
 }
 if ($container->has('HelloPipe')) {
     $app->route('/helloMiddleware', 'HelloPipe', ['GET'], 'hello-world-middleware');
+}
+if ($container->has('testTable')) {
+    $app->route('/test', 'testTable', ['GET'], 'test');
+}
+if ($container->has("fileToDS")) {
+    $app->route('/file2ds[/{resourceName}[/{id}]]', "fileToDS", ['GET', 'POST', 'OPTIONS'], 'fileToDS');
 }

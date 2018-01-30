@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: USER_T
- * Date: 01.12.2017
- * Time: 16:20
+ * Date: 30.01.2018
+ * Time: 11:36
  */
 
 namespace rollun\app\Factories;
@@ -11,14 +11,12 @@ namespace rollun\app\Factories;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
-use rollun\App\Middleware\AnotherMiddleware;
+use rollun\app\Middleware\FileUploadMiddleware;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
-use Zend\Session\Container;
-use Zend\Session\SessionManager;
 
-class SessionAwareMiddlewareFactory implements FactoryInterface
+class FileUploadMiddlewareFactory implements FactoryInterface
 {
 
     /**
@@ -35,9 +33,6 @@ class SessionAwareMiddlewareFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sessionManager = $container->get(SessionManager::class);
-        $sessionContainer = new Container("Default", $sessionManager);
-        $middleware = new AnotherMiddleware($sessionContainer);
-        return $middleware;
+        return new FileUploadMiddleware($container);
     }
 }

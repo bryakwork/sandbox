@@ -6,7 +6,7 @@
  * Time: 11:17
  */
 
-namespace rollun\App\Factories;
+namespace rollun\app\Factories;
 
 
 use Interop\Container\ContainerInterface;

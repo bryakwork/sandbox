@@ -17,8 +17,9 @@ $aggregator = new ConfigAggregator([
     \Zend\Cache\ConfigProvider::class,
     \Zend\Session\ConfigProvider::class,
     \rollun\datastore\ConfigProvider::class,
-    \rollun\Crud\ConfigProvider::class,
     \rollun\actionrender\ConfigProvider::class,
+    \rollun\Crud\ConfigProvider::class,
+    \rollun\app\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
     // Default App module config

@@ -14,13 +14,12 @@
       "email": "it.proffesor02@gmail.com"
     }
   ],
-  "extra": {
-    "fxp-asset" : {
-    "installer-paths": {
-    "npm-asset-library": "public/assets/js"
-  }
-}
-
+  "config": {
+    "fxp-asset": {
+      "installer-paths": {
+        "npm-asset-library": "public/assets/js"
+      }
+    }
   },
   "require": {
     "php": "^5.6 || ^7.0",
@@ -56,10 +55,8 @@
   },
   "autoload": {
     "psr-4": {
-      "rollun\\App\\": "src/App/src",
-      "rollun\\App\\Factories\\": "src/App/src/Factories",
+      "rollun\\app\\": "src/App/src",
       "rollun\\CatalogTools\\": "src/CatalogTools/src",
-      "rollun\\CatalogTools\\Converter\\": "src/CatalogTools/src/Converter",
       "rollun\\ebayTools\\":"src/ebayTools/src"
     }
   },

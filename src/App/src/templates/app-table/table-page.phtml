@@ -1,0 +1,8 @@
+<?php
+$this->headTitle($this->title ?: $this->url);
+?>
+    <h1 class="page-header"><?= $this->title ?></h1>
+<?=
+$this->crudTable($this->main_table['url'],
+    $this->main_table['title'],
+    $this->main_table['options']);?>

@@ -1,0 +1,25 @@
+<?php $this->bootstrap() ?>
+<h1 class="page-header"><?= $this->title ?></h1>
+<?php $this->headTitle($this->title ?: $this->url); ?>
+<?php
+$crudOptions = [
+    "widget_type" => [
+        "time" => "w-number",
+        "brand" => "w-text",
+        "category" => "w-string"
+    ]
+];
+echo $this->advCrudTable($this->main_table['url'], $this->main_table['title'], $crudOptions);
+?>
+
+<?php
+$importerOptions = [
+    'noId' => true,
+    'inputSeparator' => "\t",
+    'popupButtonLabel' => "Добавить брэнды",
+    'popupTitle' => "Добавление брэндов",
+    "placeholderText" => 'Введите новые брэнды сюда'
+];
+echo $this->importer($importerOptions);
+?>
+

@@ -91,7 +91,7 @@ class TuckerRockyParser
 
     /**Parsing schema*/
     protected $schema = [
-        "item" => [
+        "id" => [
             "start" => 1,
             "length" => 6,
             "type" => "string"

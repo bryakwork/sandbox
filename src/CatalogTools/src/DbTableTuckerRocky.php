@@ -14,6 +14,6 @@ class DbTableTuckerRocky extends DbTable
 {
     public function getIdentifier()
     {
-        return "item";
+        return "id";
     }
 }
