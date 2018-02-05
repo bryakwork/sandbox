@@ -62,6 +62,6 @@ if ($container->has('HelloPipe')) {
 if ($container->has('testTable')) {
     $app->route('/test', 'testTable', ['GET'], 'test');
 }
-if ($container->has("fileToDS")) {
-    $app->route('/file2ds[/{resourceName}[/{id}]]', "fileToDS", ['GET', 'POST', 'OPTIONS'], 'fileToDS');
+if ($container->has("file2DS")) {
+    $app->route('/file2ds[/{resourceName}]', "file2DS", ['GET', 'POST', 'OPTIONS'], 'fileToDS');
 }

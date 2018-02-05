@@ -17,7 +17,7 @@ require_once 'config/env_configurator.php';
 $container = require 'config/container.php';
 \rollun\dic\InsideConstruct::setContainer($container);
 $filename = Command::getDataDir() . "binary_storage/itemmstrnew";
-$datastore = $container->get("tuckerRocky2");
+$datastore = $container->get("tucker_Rocky_23012018_Db");
 $parser = new TuckerRockyParser($filename, $datastore);
 $parser();
 sleep(60);

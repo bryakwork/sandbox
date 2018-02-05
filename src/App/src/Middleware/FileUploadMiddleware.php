@@ -10,13 +10,14 @@ namespace rollun\app\Middleware;
 
 
 use Interop\Http\ServerMiddleware\DelegateInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface;
 use rollun\datastore\DataStore\CsvBase;
 use rollun\datastore\DataStore\Interfaces\DataStoresInterface;
 use Symfony\Component\Filesystem\LockHandler;
 use Xiag\Rql\Parser\Query;
-use Zend\Diactoros\Response\JsonResponse;
+use Zend\Diactoros\Response\EmptyResponse;
+
 
 class FileUploadMiddleware extends ContainerAwareMiddleware
 {
@@ -29,8 +30,10 @@ class FileUploadMiddleware extends ContainerAwareMiddleware
      *
      * @param ServerRequestInterface $request
      * @param DelegateInterface $delegate
-     *
      * @return ResponseInterface
+     * @throws \Exception
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
@@ -54,9 +57,12 @@ class FileUploadMiddleware extends ContainerAwareMiddleware
             $resultStore->create($row, true);
         }
 
-        $response = new JsonResponse('File uploaded successfully', 200);
-        $request = $request->withAttribute(ResponseInterface::class, $response);
-        return $delegate->process($request);
+        $request = $request->withAttribute(Response::class, new EmptyResponse(200))
+                            ->withAttribute('responseData', 'Data uploaded successfully');
+
+        unlink($filePath);
+        $response = $delegate->process($request);
+        return $response;
     }
 
     protected function getDataStoreName(ServerRequestInterface $request)
