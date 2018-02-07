@@ -1,0 +1,38 @@
+{
+  "name": "rollun-js",
+  "version": "0.0.14",
+  "description": "rollun-js",
+  "author": "rostmefpoter@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rollun-com/rollun-js.git"
+  },
+  "main": "index.js",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-loader": "^6.3.2",
+    "babel-preset-latest": "^6.22.0",
+    "bootbox": "^4.4.0",
+    "bootstrap": "^3.3.7",
+    "css-loader": "^0.26.2",
+    "dojo-rql": "^0.3.1",
+    "file-loader": "^0.10.1",
+    "html-loader": "^0.4.5",
+    "jquery": "^3.1.1",
+    "less": "^2.7.2",
+    "lodash": "^4.17.4",
+    "mitt": "^1.1.0",
+    "moment": "^2.18.1",
+    "style-loader": "^0.13.2",
+    "transliteration": "^1.5.3",
+    "url-loader": "^0.5.8",
+    "vue": "^2.2.1",
+    "vue-loader": "^13.6.1",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.1",
+    "yaml-loader": "^0.4.0",
+    "vue-upload-component": "2.x"
+  }
+}

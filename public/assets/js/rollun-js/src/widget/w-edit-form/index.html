@@ -1,0 +1,62 @@
+<div v-show="visible" class="w-edit-form">
+	<div class="content">
+		<div class="body">
+			<ul v-if="form.tabs" class="nav nav-tabs" role="tablist">
+				<li v-for="tab, key in form.tabs" :class="tab.active">
+					<a :href="'#' + key + '-tab-' + _uid" data-toggle="tab">{{ tab.title }}</a>
+				</li>
+			</ul>
+
+			<div v-if="form.tabs" class="tab-content" style="margin-top: 10px;">
+				<div v-for="tab, key in form.tabs" :class="'tab-pane ' + tab.active"
+				     :id="key + '-tab-' + _uid">
+
+					<div class="row" v-for="row in tab.rows">
+						<div :class="'col-md-' + col.col" v-for="col in row.cols">
+							<div class="panel-body">
+								<widget v-for="w, i in col.widgets" :is="w.type" :state="state" :options="w"
+								        :key="i">
+								</widget>
+							</div>
+						</div>
+					</div>
+
+					<widget v-for="w, i in tab.widgets" :is="w.type" :state="state" :options="w"
+					        :key="i">
+					</widget>
+
+				</div>
+			</div>
+
+			<div class="row" v-for="row in form.rows">
+				<div :class="'col-md-' + col.col" v-for="col in row.cols">
+					<div class="panel panel-info">
+						<div v-if="col.title" class="panel-heading">
+							<h3 class="panel-title">{{ col.title }}</h3>
+						</div>
+						<div class="panel-body">
+							<widget v-for="w, i in col.widgets" :is="w.type" :state="state" :options="w"
+							        :key="i">
+							</widget>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<widget v-for="w, i in form.widgets" :is="w.type" :state="state" :options="w"
+			        :key="i">
+			</widget>
+
+		</div>
+
+		<div class="command">
+			<button @click="cancel()" class="btn btn-default">
+				<i class="fa fa-times"></i>
+			</button>
+			<button @click="submit()" class="btn btn-primary">
+				<i class="fa fa-check"></i>
+			</button>
+		</div>
+	</div>
+</div>
+

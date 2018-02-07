@@ -1,0 +1,40 @@
+<div class="w-sc-f-filter-group">
+    <div class="btn-group">
+
+        <button type="button" @click="state.op = '$and'" class="btn btn-xs"
+                :class="state.op == '$and' ? 'btn-primary' : 'btn-default'">AND
+        </button>
+
+        <button type="button" @click="state.op = '$or'" class="btn btn-xs"
+                :class="state.op == '$or' ? 'btn-primary' : 'btn-default'">OR
+        </button>
+
+        <button v-show="state.is_child" type="button"
+                class="btn-danger btn btn-xs" @click="remove()">
+            <i class="fa fa-times"></i>
+        </button>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-success btn-xs dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                <i class="fa fa-plus"></i> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" @click="add_filter('$no_column', '$eq', null)">фильтр</a></li>
+<!--
+                <li><a href="#" @click="add_group('$and')">группа</a></li>
+-->
+            </ul>
+        </div>
+    </div>
+
+    <div style="padding-left: 10px;margin-top: 2px;border-left: 1px dotted #ccc;">
+        <widget v-for="arg, i in state.args"
+                :is="arg.op == '$and' || arg.op == '$or' ? 'w-sc-f-filter-group' : 'w-sc-f-filter-item'"
+                :options="options"
+                :state="arg" :key="i">
+        </widget>
+    </div>
+
+</div>

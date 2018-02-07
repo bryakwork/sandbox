@@ -13,6 +13,7 @@ use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface;
+use rollun\datastore\DataStore\Cacheable;
 use rollun\datastore\DataStore\CsvBase;
 use rollun\installer\Command;
 use Symfony\Component\Filesystem\LockHandler;
@@ -39,13 +40,10 @@ class File2DSMiddleware implements MiddlewareInterface
         $fileName = $file->getClientFilename();
         $filePath = $this->tmpDirName . '/' . $fileName;
         $file->moveTo($filePath);
-        //TODO: get delimeter from request HERE
-        $delimeter = ',';
-        $tmpDataStore = new CsvBase($filePath, $delimeter, new LockHandler($filePath));
-        $data = $tmpDataStore->query(new Query());
-        foreach ($data as $row) {
-            $this->dataStore->create($row, true);
-        }
+        $delimeter = $request->getAttribute('file2DSDelimeter');
+        $dataSource = new CsvBase($filePath, $delimeter, new LockHandler($filePath));
+        $resultStore = new Cacheable($dataSource, $this->dataStore);
+        $resultStore->refresh();
 
         $request = $request->withAttribute(Response::class, new EmptyResponse(200))
             ->withAttribute('responseData', 'Data uploaded successfully');

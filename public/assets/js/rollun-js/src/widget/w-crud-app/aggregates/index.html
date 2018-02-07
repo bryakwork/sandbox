@@ -1,0 +1,15 @@
+<div v-show="visibility" :id="options.uid" class="w-sc-aggregates">
+	<div>
+		<div class="btn-group" v-for="column, column_name in options.schema"
+		     v-if="column.aggregates"
+		     style="margin-right: 5px;">
+			<button class="btn btn-default btn-warning btn-xs">{{ column.title }}</button>
+			<button class="btn btn-xs" v-for="aggregate in column.aggregates"
+			        @click="toggle_aggregate(column_name, aggregate)"
+			        :class="in_aggregates(column_name, aggregate) == true ? ' btn-info' : ' btn-default'">
+				{{ aggregate }}
+			</button>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,14 @@
+<div v-show="visibility" :id="options.uid" class="w-sc-group-by">
+	<div>
+		<div class="btn-group">
+			<button class="btn btn-default btn-warning btn-xs">G</button>
+			<button v-for="column, column_name in options.schema"
+			        v-if="column.group"
+			        @click="toggle_column(column_name)"
+			        :class="in_group_by(column_name) == true ? ' btn-info' : ' btn-default'"
+			        class="btn btn-xs ">{{ column.title }}
+			</button>
+		</div>
+	</div>
+</div>
+

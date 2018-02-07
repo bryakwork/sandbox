@@ -22,7 +22,7 @@ class TestTableMiddleware implements MiddlewareInterface
             'title' => 'Dashboard',
             'main_table' => [
                 // можно все передать через параметры урла
-                'url' => '/api/datastore/test_Db',
+                'url' => '/api/datastore/test_csv',
                 'title' => 'test',
                 'options' => [],
             ],

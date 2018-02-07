@@ -1,0 +1,132 @@
+<div :id="options.uid" class="form-group w-string" v-show="visibility">
+	<h3>{{ title || url }}</h3>
+
+	<div ref="data_table" v-show="!edit_mode">
+		<div class="w-cmd-bar">
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<button type="button" class="btn btn-success btn-sm" @click="new_item">
+						<i class="fa fa-plus"></i>
+					</button>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm" @click="refresh">
+						<i ref="btn_refresh" class="fa fa-refresh"></i>
+					</button>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-default btn-sm"
+					        :class="filter_bar ? ' btn-warning' : ' btn-default' "
+					        @click="filter_bar = !filter_bar">
+						<i class="fa fa-filter"></i>
+					</button>
+					<button type="button" class="btn btn-sm"
+					        :class="group_bar ? ' btn-warning' : ' btn-default' "
+					        @click="group_bar = !group_bar">
+						G
+					</button>
+					<button type="button" class="btn btn-default btn-sm"
+					        :class="aggregates_bar ? ' btn-warning' : ' btn-default' "
+					        @click="aggregates_bar = !aggregates_bar">
+						A
+					</button>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" class="btn btn-danger btn-sm" @click="reset">
+						<i class="fa fa-times"></i>
+					</button>
+				</div>
+
+				<div class="btn-group">
+					<input type="text" @keyup.enter="search" v-model="search_text"
+					       class="form-control input-sm w-sc-search" placeholder="поиск"/>
+				</div>
+
+				<div class="btn-group">
+					<button type="button" @click="prev_page()" class="btn btn-default btn-sm"
+					        :disabled="request.offset == 0">
+						<i class="fa fa-chevron-left"></i>
+					</button>
+					<button type="button" class="btn btn-default btn-sm">
+						с {{ request.offset + 1 }} по {{ count() }} из {{ total() }}
+					</button>
+					<button type="button" @click="next_page()"
+					        class="btn btn-default btn-sm"
+					        :disabled="request.offset + request.limit >= total() || request.offset + request.limit <= 0">
+						<i class="fa fa-chevron-right"></i>
+					</button>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+							{{ request.limit > 0 ? request.limit : total() }}
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li v-for="pn in pages">
+								<a href="#" @click="set_limit(pn)">{{ pn }}</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="w-filter" v-show="filter_bar">
+			<w-filter-group :state="request.filter" :options="{schema: items.schema()}"></w-filter-group>
+			<!--
+					<div style="margin-top: 5px;" v-show="request.filter.args.length > 0">
+						<div class="btn-group">
+							<button @click="apply_filter" class="btn btn-success btn-xs">
+								<i class="fa fa-refresh"></i> применить
+							</button>
+							<button @click="clear_filter" class="btn btn-danger btn-xs">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+			-->
+		</div>
+		<w-group-by v-show="group_bar" :state="request" :options="{schema: items.schema()}"></w-group-by>
+		<w-aggregates v-show="aggregates_bar" :state="request" :options="{schema: items.schema()}"></w-aggregates>
+		<i ref='loadingIcon' class="fa fa-cog fa-spin fa-5x fa-fw"
+		   style="position: relative; left: 35%; margin: 10%"></i>
+		<div class="w-table" ref="dataTable" style="display: none">
+			<table class="table table-condensed table-bordered">
+				<thead>
+				<tr>
+					<th v-for="column, column_name in items.schema()">
+						<a style="cursor: pointer;" @click="order_by(column)">{{ column.title }}</a>
+						<i v-show="request.sort.column == column.bind"
+						   :class="'fa ' + (request.sort.direction == 'asc' ? 'fa-chevron-circle-up' : 'fa-chevron-circle-down')"></i>
+					</th>
+					<th>&nbsp;</th>
+				</tr>
+				</thead>
+
+				<tbody>
+				<tr v-for="item in items.query(get_request())">
+					<td v-for="column, column_name in items.schema()">
+						{{ item[column_name] }}
+					</td>
+					<td>
+						<div style="white-space: nowrap;">
+							<button @click="edit_item(item)" class="btn btn-primary btn-xs">
+								<i class="fa fa-pencil"></i>
+							</button>
+							<button @click="remove_item(item)" class="btn btn-danger btn-xs">
+								<i class="fa fa-trash"></i>
+							</button>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<w-edit-form v-show="edit_mode" ref="edit_form"></w-edit-form>
+
+</div>
+

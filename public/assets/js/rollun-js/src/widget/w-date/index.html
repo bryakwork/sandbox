@@ -1,0 +1,9 @@
+<div :id="options.uid" class="form-group w-string" v-show="visibility">
+	<label v-if="options.label">{{ options.label }}</label>
+	<input type="date"
+	       class="form-control"
+	       @change="onchange"
+	       :disabled="disabled"
+	       v-model="value"/>
+</div>
+

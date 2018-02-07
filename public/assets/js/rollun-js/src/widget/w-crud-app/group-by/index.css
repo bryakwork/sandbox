@@ -1,0 +1,12 @@
+.w-sc-group-by {
+    padding: 5px;
+    /*border-top: 1px solid #ccc;*/
+    border-bottom: 1px solid #ccc;
+    margin: 5px 0 5px 0;
+    -webkit-box-shadow: 0 1px 3px 0 #ccc;
+    box-shadow: 0 1px 3px 0 #ccc;
+}
+
+.w-sc-group-by button {
+    /*font-weight: bold;*/
+}

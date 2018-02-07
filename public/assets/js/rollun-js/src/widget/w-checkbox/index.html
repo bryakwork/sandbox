@@ -1,0 +1,11 @@
+<div :id="options.uid" class="form-group checkbox w-checkbox" v-show="visibility">
+	<label>
+		<input type="checkbox"
+		       @change="onchange"
+		       @click="onkeyup"
+		       value="1"
+		       :disabled="disabled"
+		       v-model="value"/>
+		{{ options.label }}
+	</label>
+</div>

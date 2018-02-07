@@ -1,0 +1,11 @@
+<div :id="options.uid" class="form-group w-text" v-show="visibility">
+    <label v-if="options.label">{{ options.label }}</label>
+    <textarea
+            class="form-control"
+            @change="onchange"
+            @keyup="onkeyup"
+            :disabled="disabled"
+            v-model="state[options.bind]">
+    </textarea>
+</div>
+

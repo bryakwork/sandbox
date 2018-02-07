@@ -1,0 +1,9 @@
+<div :id="options.uid" class="form-group w-number" v-show="visibility">
+	<label v-if="options.label">{{ options.label }}</label>
+	<input type="number"
+	       class="form-control"
+	       @change="onchange"
+	       @keyup="onkeyup"
+	       :disabled="disabled"
+	       v-model="state[options.bind]"/>
+</div>
