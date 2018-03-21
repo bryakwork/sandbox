@@ -1,6 +1,6 @@
 <?php
 
-namespace rollun\App;
+namespace rollun\app;
 
 use rollun\amazonItemSearch\isual\ImporterViewHelper;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -24,6 +24,14 @@ class ConfigProvider
     {
         return [
             'templates' => $this->getTemplates(),
+            'view_helpers' => [
+                'factories' => [
+                    RgridHelper::class => InvokableFactory::class,
+                ],
+                'aliases' => [
+                    'rgrid' => RgridHelper::class,
+                ]
+            ]
         ];
     }
 

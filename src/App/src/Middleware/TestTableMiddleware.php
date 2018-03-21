@@ -17,7 +17,7 @@ class TestTableMiddleware implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
-        $params = $request->getQueryParams();
+        /*$params = $request->getQueryParams();
         $params = array_merge([
             'title' => 'Dashboard',
             'main_table' => [
@@ -27,8 +27,9 @@ class TestTableMiddleware implements MiddlewareInterface
                 'options' => [],
             ],
         ], $params);
-        $request = $request->withAttribute('responseData', $params);
-        $request = $request->withAttribute(HtmlParamResolver::KEY_ATTRIBUTE_TEMPLATE_NAME, 'app-table::table-wInput');
+        $request = $request->withAttribute('responseData', $params);*/
+
+        $request = $request->withAttribute(HtmlParamResolver::KEY_ATTRIBUTE_TEMPLATE_NAME, 'app-table::table-rgrid');
         $response = $delegate->process($request);
 
         return $response;

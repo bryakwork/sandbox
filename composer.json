@@ -44,7 +44,8 @@
     "zendframework/zend-http": "^2.5",
     "zendframework/zend-i18n": "^2.7",
     "http-interop/http-middleware": "^0.4.0",
-    "dts/ebay-sdk-php": "^14.0.0"
+    "dts/ebay-sdk-php": "^14.0.0",
+    "npm-asset/dojo-rql" : "0.3.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7.15",
@@ -57,7 +58,8 @@
     "psr-4": {
       "rollun\\app\\": "src/App/src",
       "rollun\\CatalogTools\\": "src/CatalogTools/src",
-      "rollun\\ebayTools\\":"src/ebayTools/src"
+      "rollun\\ebayTools\\":"src/ebayTools/src",
+      "rollun\\file2ds\\": "src/File2DS/src"
     }
   },
   "autoload-dev": {
